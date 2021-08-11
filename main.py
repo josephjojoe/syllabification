@@ -22,3 +22,19 @@ for i in range(0, len(labels)):
         labels[i][j] = int(labels[i][j])
 for i in range(0, len(labels)):
     labels[i] = np.array(labels[i])
+
+    
+# Vectorises syllable strings by treating each character as a token
+tokenizer = tf.keras.preprocessing.text.Tokenizer(char_level=True)
+tokenizer.fit_on_texts(words)
+words = tokenizer.texts_to_sequences(words)
+for i in range(0, len(words)):
+    words[i] = np.array(words[i], dtype=float)
+    
+# Pads inputs/outputs to desired maximum sequence length
+padded_inputs = tf.keras.preprocessing.sequence.pad_sequences(
+    words, padding="post", maxlen=15
+)
+padded_outputs = tf.keras.preprocessing.sequence.pad_sequences(
+    labels, padding="post", maxlen=15
+)    
