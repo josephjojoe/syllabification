@@ -2,6 +2,15 @@
 import re
 from itertools import chain
 
+# The words are stored in mhyph.txt in the form 'git¥hub', where the yen character ('¥') denotes a syllable break:
+# g i t ¥ h u b
+
+# This script deletes duplicate words and creates a binary string showing where the syllable breaks are:
+# g i t - h u b
+# 0 0 1   0 0 0
+
+# An example line in preprocessed.txt looks like 'github,001000'. This binary format is useful as we can use the 'binary_accuracy' 
+# metric when training and evaluating our model.
 
 # Flattens word list
 with open("mhyph.txt", "r", errors="ignore") as f:
