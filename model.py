@@ -4,6 +4,29 @@ from loss import mean_weighted_bce_mse
 
 
 def build_model():
+    # Inception module implementation for 1D (sequential) data
+    def inception_module(inputs):
+        inception_branch_1 = tf.keras.layers.Conv1D(128, kernel_size=1, strides=2, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inputs)
+        inception_branch_1 = tf.keras.layers.ZeroPadding1D(padding=(0, 15 - inception_branch_1.shape[1]))(inception_branch_1)
+
+        inception_branch_2 = tf.keras.layers.Conv1D(128, kernel_size=1, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inputs)
+        inception_branch_2 = tf.keras.layers.Conv1D(128, kernel_size=3, strides=2, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inception_branch_2)
+        inception_branch_2 = tf.keras.layers.ZeroPadding1D(padding=(0, 15 - inception_branch_2.shape[1]))(inception_branch_2)
+
+        inception_branch_3 = tf.keras.layers.AveragePooling1D(pool_size=3, strides=2)(inputs)
+        inception_branch_3 = tf.keras.layers.Conv1D(128, kernel_size=3, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inception_branch_3)
+        inception_branch_3 = tf.keras.layers.ZeroPadding1D(padding=(0, 15 - inception_branch_3.shape[1]))(inception_branch_3)
+
+        inception_branch_4 = tf.keras.layers.Conv1D(128, kernel_size=1, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inputs)
+        inception_branch_4 = tf.keras.layers.Conv1D(128, kernel_size=3, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inception_branch_4)
+        inception_branch_4 = tf.keras.layers.Conv1D(128, kernel_size=3, strides=2, activation="tanh", activity_regularizer=tf.keras.regularizers.l2(1e-5))(inception_branch_4)
+        inception_branch_4 = tf.keras.layers.ZeroPadding1D(padding=(0, 15 - inception_branch_4.shape[1]))(inception_branch_4)
+
+        inception_output = tf.keras.layers.add([inception_branch_1, inception_branch_2, inception_branch_3, inception_branch_4, inputs])
+        inception_output = tf.keras.layers.BatchNormalization()(inception_output)
+        return inception_output
+
+    
     inputs = tf.keras.Input(shape=(15,))
     embedded_inputs = tf.keras.layers.Embedding(64, 128, mask_zero=True)(inputs)
     embedded_inputs = tf.keras.layers.BatchNormalization()(embedded_inputs)
