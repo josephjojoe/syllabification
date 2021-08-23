@@ -22,3 +22,4 @@ p y - t h o n
 
 ### To be done
 • Implement Linear Chain CRF.
+• Experimentation with novel architectures and hyperparameters, bearing in mind that using a hyperparameter tuner may lead to inflated results.
