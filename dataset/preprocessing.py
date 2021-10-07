@@ -23,6 +23,9 @@ with open("preprocessed.txt", "w+") as f:
         # List holding undemarcated word (e.g. 'syllable') and corresponding binary ('00101000').
         writer = []
         writer.append(re.sub("¥", "", word))
+
+        if not re.sub("¥", "", word).isalpha():
+            continue # Jumps to next word
         
         # Converts to binary, where '1' denotes a syllable's start.
         word = list(re.sub("¥", "1", re.sub("[^¥]", "0", word)))
