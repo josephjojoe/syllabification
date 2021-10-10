@@ -18,9 +18,4 @@ p y - t h o n
 ```
 
 ### Statistics
-• Peak validation binary accuracy of 96.64% on the Moby Hyphenator II dataset.
-
-### To be done
-• Implement Linear Chain CRF.
-
-• Experimentation with novel architectures and hyperparameters, bearing in mind that using a hyperparameter tuner may lead to inflated results.
+• Peak validation binary accuracy of 97.38% on the Moby Hyphenator II dataset.
