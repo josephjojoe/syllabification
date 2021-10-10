@@ -18,4 +18,4 @@ p y - t h o n
 ```
 
 ### Statistics
-• Peak validation binary accuracy of 97.38% on the Moby Hyphenator II dataset.
+• Peak validation binary accuracy of 98.20% on the Moby Hyphenator II dataset.
