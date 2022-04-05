@@ -1,5 +1,5 @@
 # syllabification
-GRU-based neural network with Inception modules and an optional Linear Chain CRF that splits words into syllables.
+GRU-based neural network with Inception modules and an optional Linear Chain CRF (`/notebooks/CRF_Syllable_Experimentation.ipynb`) that splits words into syllables.
 
 ### Model architecture
 Tokenized data is passed into an Embedding layer and then into two 'stems' - the first stem contains a stack of 3 bidirectional GRU layers (2 x 256 = 512 units each) and the second stem uses a 1D implementation (since it is being used for sequence data, not images) of the Inception v2 module architecture. The stem outputs are concatenated and passed through two TimeDistributed layers then GlobalMaxPool1D is applied - finally there is a Dense layer with 15 units, outputting a binary string that is a prediction of the syllable breaks in the input data.
